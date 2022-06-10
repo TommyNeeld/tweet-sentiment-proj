@@ -16,7 +16,6 @@ Your task is to explore the data with some visualisations, and then train and "p
 
 - Backend and frontend code insipired by [this arcile](https://testdriven.io/blog/fastapi-streamlit/) by [Amal Shaji](https://github.com/amalshaji)
 - Sentiment analysis using huggingface inspired by this [article](https://huggingface.co/blog/sentiment-analysis-python) by HuggingFace :hugs:
-Baseline tf-idf sentiment analysis model: https://www.kaggle.com/code/nishant483/simple-solution-with-tf-idf-scores
 
 ### Tools used
 - FastAPI: for the API - using async and shared file store for model inference
@@ -52,5 +51,7 @@ The response will be a path to a `<UUID>.json` file which, when the prediction i
 - Additional analysis of results - Cross Validation of custom model
 - Hyperparam tuning of custom model
 - Test more models!
-  - Likely get best result by fine-tuning a pre-built transformer using sentence transformers, see [this](https://huggingface.co/finiteautomata/bertweet-base-sentiment-analysis?text=london+is+great) article  
+  - Likely get best result by fine-tuning a pre-built transformer using sentence transformers, see [this](https://huggingface.co/finiteautomata/bertweet-base-sentiment-analysis?text=london+is+great) article 
+  - Dataset is currently very limited
 - Optimise size of docker images
+- Should probably first understand the use-case
