@@ -12,6 +12,7 @@ Your task is to explore the data with some visualisations, and then train and "p
 - "deploy" the classifier using a docker container and an endpoint of "/predict" to run predictions on new tweets
   - I'd recommend using flask as a simple server
 
+-----------------
 ## Links to stuff I used
 
 - Backend and frontend code insipired by [this arcile](https://testdriven.io/blog/fastapi-streamlit/) by [Amal Shaji](https://github.com/amalshaji)
