@@ -19,7 +19,7 @@ Your task is to explore the data with some visualisations, and then train and "p
 
 ### Tools used
 - FastAPI: for the API - using async and shared file store for model inference
-- streamlit : for the interface
+- Streamlit: for the frontend
 - Docker: to containerize the app
 ### To run
 ```bash
