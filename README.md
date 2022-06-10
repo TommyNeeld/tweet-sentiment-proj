@@ -1,11 +1,4 @@
-# Net Purpose Machine Learning Coding Challenge
-
-## Setup
-
-- Ensure python is installed (I recommend anaconda for getting all the data science libraries pre-installed)
-- Ensure docker is installed
-- Download product\_sentiment.csv
-
+# Mini Tweet sentiment analysis project
 ## The task
 This is a dataset from kaggle.com containing tweets about products and the sentiment of the tweet. 
 
@@ -19,32 +12,45 @@ Your task is to explore the data with some visualisations, and then train and "p
 - "deploy" the classifier using a docker container and an endpoint of "/predict" to run predictions on new tweets
   - I'd recommend using flask as a simple server
 
-## Submitting the task
-When you have completed the challenge, please email me with a zip file or link to your solution to the email that is printed out of the following code:
-```python
-# Shamelessly stolen from https://www.stephendiehl.com/pages/hire.html
-import os
-import sys
-import numpy
-import string
+## Links to stuff I used
 
-if sys.version > '3':
-    strl = str
-else:
-    strl = string
+- Backend and frontend code insipired by [this arcile](https://testdriven.io/blog/fastapi-streamlit/) by [Amal Shaji](https://github.com/amalshaji)
+- Sentiment analysis using huggingface inspired by this [article](https://huggingface.co/blog/sentiment-analysis-python) by HuggingFace :hugs:
+Baseline tf-idf sentiment analysis model: https://www.kaggle.com/code/nishant483/simple-solution-with-tf-idf-scores
 
-EMAIL = """
-\xbb\xbb\xcc\xc9\xc8@\xc8\xbf\xce\xca\xcf\xcc\xca\xc9\xcd\xbf.\xbd\xc9\xc7
-"""
-
-y = string.ascii_letters
-n = len(y)
-M = numpy.identity(n, dtype=numpy.int32)
-M[:n, n-1] = 1
-
-a = numpy.array(list(map(ord, y)), dtype=numpy.int32)
-x = ''.join(map(chr, numpy.dot(M, a)))
-uncipher = strl.maketrans(x,y)
-
-print( strl.translate(EMAIL, uncipher) )
+### Tools used
+- FastAPI: for the API - using async and shared file store for model inference
+- streamlit : for the interface
+- Docker: to containerize the app
+### To run
+```bash
+cd src
+docker-compose up -d
 ```
+
+**Warning, images are not small ensure you have enough RAM allocated to Docker - the APP is 1.5GB, the API is 1.3GB**
+
+(or follow `/src/Makefile`)
+
+Go to http://localhost:8501/ for frontend
+
+Go to http://localhost:8080/docs for backend, to call API can run:
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8080/predict/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "text": "This is a good tweet",
+  "model": "custom-tfidf"
+}'
+```
+The response will be a path to a `<UUID>.json` file which, when the prediction is complete, will be stored in the shared `/storage` volume of the container. Accessible by running `docker exec -it src_app_1 bash` `>ls /storage/` `>cat <UUID>.json`
+
+### Next setps
+- Additional analysis of results - Cross Validation of custom model
+- Hyperparam tuning of custom model
+- Test more models!
+  - Likely get best result by fine-tuning a pre-built transformer using sentence transformers, see [this](https://huggingface.co/finiteautomata/bertweet-base-sentiment-analysis?text=london+is+great) article  
+- Optimise size of docker images
