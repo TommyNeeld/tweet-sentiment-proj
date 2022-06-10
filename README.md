@@ -47,7 +47,7 @@ curl -X 'POST' \
 ```
 The response will be a path to a `<UUID>.json` file which, when the prediction is complete, will be stored in the shared `/storage` volume of the container. Accessible by running `docker exec -it src_app_1 bash` `>ls /storage/` `>cat <UUID>.json`
 
-### Next setps
+### Next steps
 - Additional analysis of results - Cross Validation of custom model
 - Hyperparam tuning of custom model
 - Test more models!
