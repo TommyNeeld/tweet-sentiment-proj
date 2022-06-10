@@ -27,6 +27,8 @@ def main():
     model_options = {"Pretrained HF model": 0, "Custom TF-IDF SVM": 1}
     model_selection = st.selectbox("Select model", model_options, index=0)
 
+    st.write("*Note, predictions on the API are running asynchronously*")
+
     if st.button("Calculate sentiment"):
         if tweet is not None:
 
@@ -36,7 +38,7 @@ def main():
             index = model_options[model_selection]
             holding_message = f"Calculating sentiment using {model_selection}..."
             if index == 0:
-                holding_message += " This will take some time on first run"
+                holding_message += " This will take some time on first run (model being downloaded)"
 
             # spinner while waiting for response
             with st.spinner(holding_message):
